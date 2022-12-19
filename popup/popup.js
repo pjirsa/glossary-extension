@@ -5,11 +5,12 @@ if (sendMessageId) {
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
-                    //url: chrome.runtime.getURL("images/stars.jpeg"),
+                    glossaryurl: chrome.runtime.getURL("data/glossary.json"),
                     //imageDivId: `${guidGenerator()}`,
                     tabId: tabs[0].id
                 },
                 function(response) {
+                    console.log(response);
                     window.close();
                 }
             );            

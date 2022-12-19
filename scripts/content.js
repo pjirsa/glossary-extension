@@ -6,22 +6,19 @@
 //
 //     https://www.apache.org/licenses/LICENSE-2.0
 //
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+
+  fetchGlossary(request).then(v => sendResponse({searchResults: v[0]}));
+  return true;
+//  console.log(glossary);
+
+/*
   const patientpage = document.querySelector(".main");
 
 // `document.querySelector` may return null if the selector doesn't match anything.
 if (patientpage) {
-  const text = patientpage.textContent;
-  /**
-   * Regular expression to find all "words" in a string.
-   *
-   * Here, a "word" is a sequence of one or more non-whitespace characters in a row. We don't use the
-   * regular expression character class "\w" to match against "word characters" because it only
-   * matches against the Latin alphabet. Instead, we match against any sequence of characters that
-   * *are not* a whitespace characters. See the below link for more information.
-   * 
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
-   */
+  const text = patientpage.textContent;  
   const wordMatchRegExp = /[^\s]+/g;
   const words = text.matchAll(wordMatchRegExp);
   // // matchAll returns an iterator, convert to array to get word count
@@ -43,6 +40,13 @@ if (patientpage) {
   // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement
   heading.insertAdjacentElement("beforebegin", badge);
 }
+*/
 
-  sendResponse({ fromcontent: "This message is from content.js" });
 });
+
+async function fetchGlossary(request) {
+  console.log(request.glossaryurl);
+  const response = await fetch(request.glossaryurl);
+  const glossary = await response.json();
+  return glossary;
+}
