@@ -22,5 +22,14 @@
         "https://localhost:5004/*"
       ]
     }
-  ]
+  ],
+  "web_accessible_resources": [
+    {
+        "resources": [
+          "images/*.jpeg",
+          "data/glossary.json"
+        ],
+        "matches": ["<all_urls>"]
+    }
+]
 }
