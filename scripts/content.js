@@ -5,11 +5,15 @@ const wrapAsyncFunction = (listener) => (request, sender, sendResponse) => {
   Promise.resolve(listener(request, sender)).then(sendResponse);
   return true; // return true to indicate you want to send a response asynchronously
 };
+
 chrome.runtime.onMessage.addListener(
   wrapAsyncFunction(async (request, sender) => {
-  var glossary = await fetchGlossary(request);
-  return glossary[0];
-}));
+    var glossary = await fetchGlossary(request);
+    // do search here
+    return [glossary[0], glossary[1], glossary[2]];
+  })
+);
+
 async function fetchGlossary(request) {
   console.log(request.glossaryurl);
   const response = await fetch(request.glossaryurl);
