@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(
   wrapAsyncFunction(async (request, sender) => {
     var glossary = await fetchGlossary(request);
     // do search here
+    // return 'faked' search results for now
     return [glossary[0], glossary[1], glossary[2]];
   })
 );
